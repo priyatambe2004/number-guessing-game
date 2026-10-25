@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hunch – Number Guessing Game</title>
+<meta name="description" content="Guess the secret number with higher or lower hints and a hot-or-cold meter.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="logo" href="#play"><span class="q">?</span>Hunch</a>
+    <nav aria-label="Main"><a href="#play">Play</a><a href="#tips">Strategy</a><a href="#stats">Stats</a><a href="#faq">FAQ</a></nav>
+    <button class="theme" id="theme" aria-label="Switch to dark mode">☾</button>
+  </div>
+</header>
+
+<main>
+  <section class="wrap play" id="play">
+    <p class="eyebrow">Number guessing game</p>
+    <h1>I’m thinking of a <em>number.</em></h1>
+    <p class="lede">Guess it before you run out of attempts. You’ll get higher or lower hints and a hot-or-cold reading after every guess.</p>
+
+    <div class="card">
+      <div class="levels" id="levels" role="group" aria-label="Difficulty">
+        <button data-level="easy" aria-pressed="false">Easy<small>1–50</small></button>
+        <button data-level="medium" aria-pressed="true">Medium<small>1–100</small></button>
+        <button data-level="hard" aria-pressed="false">Hard<small>1–500</small></button>
+      </div>
+
+      <div class="rangebox">
+        <div class="rangelabels"><span>It’s between <b id="lowL">1</b> and <b id="highL">100</b></span><span id="attemptsText">Attempts 0 / 8</span></div>
+        <div class="rangebar" id="rangebar"><div class="fill"></div></div>
+        <div class="pips" id="pips" aria-hidden="true"></div>
+      </div>
+
+      <form id="form" novalidate>
+        <label for="guess" class="sr">Your guess</label>
+        <div class="entry">
+          <input id="guess" type="number" inputmode="numeric" placeholder="Your guess" autocomplete="off">
+          <button class="btn" id="go" type="submit">Guess</button>
+        </div>
+      </form>
+
+      <div class="feedback" id="feedback" role="status" aria-live="polite">
+        <p class="dir" id="dir">Make your first guess.</p>
+        <p class="temp" id="temp"></p>
+      </div>
+
+      <div class="row">
+        <button class="btn ghost" id="hint" type="button">Use a hint (costs 1 attempt)</button>
+        <button class="btn link" id="restart" type="button">New game</button>
+      </div>
+      <p class="hinttext" id="hinttext" role="status"></p>
+
+      <div class="history"><h2>Your guesses</h2><ul id="history"><li class="empty">None yet.</li></ul></div>
+
+      <div class="banner" id="banner" hidden>
+        <h2 id="bTitle"></h2><p id="bText"></p>
+        <button class="btn" id="again" type="button">Play again</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="tips">
+    <h2 class="sec">Winning strategy</h2>
+    <div class="cards">
+      <article><b>1</b><h3>Start in the middle</h3><p>On 1–100, try 50. Every answer then cuts the possibilities in half.</p></article>
+      <article><b>2</b><h3>Keep halving</h3><p>Guess the middle of the range shown above. This is called binary search.</p></article>
+      <article><b>3</b><h3>Watch the numbers</h3><p>Any range needs at most about log₂(size) guesses, so 100 takes 7.</p></article>
+    </div>
+  </section>
+
+  <section class="wrap" id="stats">
+    <div class="head"><h2 class="sec">Your stats</h2><button class="btn link" id="clearStats">Clear</button></div>
+    <div class="cards four">
+      <article><span class="num" id="stPlayed">0</span><p>Games played</p></article>
+      <article><span class="num" id="stWon">0</span><p>Games won</p></article>
+      <article><span class="num" id="stBest">–</span><p>Best (current level)</p></article>
+      <article><span class="num" id="stRate">0%</span><p>Win rate</p></article>
+    </div>
+    <p class="note">Saved only in your browser.</p>
+  </section>
+
+  <section class="wrap faq" id="faq">
+    <h2 class="sec">Questions</h2>
+    <details><summary>Do invalid guesses cost an attempt?</summary><p>No. Empty, decimal, out-of-range and repeated guesses show a message and are not counted.</p></details>
+    <details><summary>How is the hot-or-cold reading worked out?</summary><p>It compares how far your guess is from the answer with the size of the range. Closer than 3% of the range is burning hot.</p></details>
+    <details><summary>What does the hint do?</summary><p>It tells you whether the secret number is odd or even. You can use it once per game and it uses one attempt.</p></details>
+  </section>
+</main>
+
+<footer><div class="wrap">© 2026 Hunch · Built for Task 25 · HTML, CSS and JavaScript</div></footer>
+<script src="script.js"></script>
+</body>
+</html>
